@@ -7,3 +7,8 @@ ruby
 ----
 
 cd ruby && rake test
+
+perl
+----
+
+cd perl && prove -Ipage_002
