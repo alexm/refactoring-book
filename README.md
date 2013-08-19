@@ -6,9 +6,9 @@ Code from the book Refactoring, Ruby Edition
 ruby
 ----
 
-cd ruby && rake test
+    cd ruby && rake page_002
 
 perl
 ----
 
-cd perl && prove -Ipage_002
+    cd perl && prove -Ipage_002
