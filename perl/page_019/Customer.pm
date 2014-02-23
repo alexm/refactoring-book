@@ -30,7 +30,7 @@ sub statement
     my ( $total_amount, $frequent_renter_points ) = ( 0, 0 );
     my $result = "Rental Record for " . $self->name . "\n";
     for my $element (@{ $self->rentals }) {
-        $frequent_renter_points = $element->frequent_renter_points();
+        $frequent_renter_points += $element->frequent_renter_points();
 
         # show figures for this rental
         $result .= "\t" . $element->movie->title . "\t" . $element->charge() . "\n";
