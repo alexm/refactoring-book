@@ -11,13 +11,21 @@ class StatementTest < Test::Unit::TestCase
         rental = Rental.new(movie, 42)
         @customer = Customer.new('alexm')
         @customer.add_rental(rental)
+        movie2 = Movie.new("The Quiet Man", Movie::REGULAR)
+        rental2 = Rental.new(movie2, 7)
+        @customer.add_rental(rental2)
+        movie3 = Movie.new("Ice Age", Movie::CHILDRENS)
+        rental3 = Rental.new(movie3, 2)
+        @customer.add_rental(rental3)
     end
     def test_statement
         statement_exp = <<EoS.chomp
 Rental Record for alexm
 \tThe Watchmen\t126
-Amount owed is 126
-You earned 2 frequent renter points
+\tThe Quiet Man\t9.5
+\tIce Age\t1.5
+Amount owed is 137.0
+You earned 4 frequent renter points
 EoS
         assert_equal statement_exp, @customer.statement
     end
@@ -25,8 +33,10 @@ EoS
         html_statement_exp = <<EoS.chomp
 <h1>Rentals for <em>alexm</em></h1><p>
 \tThe Watchmen: 126<br>
-<p>You owe <em>126</em><p>
-On this rental you earned <em>2</em> frequent renter points<p>
+\tThe Quiet Man: 9.5<br>
+\tIce Age: 1.5<br>
+<p>You owe <em>137.0</em><p>
+On this rental you earned <em>4</em> frequent renter points<p>
 EoS
         assert_equal html_statement_exp, @customer.html_statement if @customer.respond_to?(:html_statement)
     end
