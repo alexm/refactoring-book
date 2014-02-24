@@ -7,14 +7,20 @@ require 'customer'
 
 class StatementTest < Test::Unit::TestCase
     def setup
-        movie = Movie.new("The Watchmen", Movie::NEW_RELEASE)
+        if Movie.instance_methods.find_index(:price=)
+            movie = Movie.new("The Watchmen", NewReleasePrice.new)
+            movie2 = Movie.new("The Quiet Man", RegularPrice.new)
+            movie3 = Movie.new("Ice Age", ChildrensPrice.new)
+        else
+            movie = Movie.new("The Watchmen", Movie::NEW_RELEASE)
+            movie2 = Movie.new("The Quiet Man", Movie::REGULAR)
+            movie3 = Movie.new("Ice Age", Movie::CHILDRENS)
+        end
         rental = Rental.new(movie, 42)
         @customer = Customer.new('alexm')
         @customer.add_rental(rental)
-        movie2 = Movie.new("The Quiet Man", Movie::REGULAR)
         rental2 = Rental.new(movie2, 7)
         @customer.add_rental(rental2)
-        movie3 = Movie.new("Ice Age", Movie::CHILDRENS)
         rental3 = Rental.new(movie3, 2)
         @customer.add_rental(rental3)
     end
