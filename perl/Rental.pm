@@ -35,4 +35,11 @@ sub charge
     return $result;
 }
 
+sub frequent_renter_points
+{
+    my $self = shift;
+
+    return ( $self->movie->price_code == Movie::NEW_RELEASE && $self->days_rented > 1 ) ? 2 : 1;
+}
+
 1;
