@@ -51,21 +51,7 @@ sub amount_for
 {
     my ($rental) = @_;
 
-    my $result = 0;
-    # determine amounts for each line
-    if ( $rental->movie->price_code == Movie::REGULAR ) {
-        $result += 2;
-        $result += ( $rental->days_rented - 2 ) * 1.5 if $rental->days_rented > 2;
-    }
-    elsif ( $rental->movie->price_code == Movie::NEW_RELEASE ) {
-        $result += $rental->days_rented * 3;
-    }
-    elsif ( $rental->movie->price_code == Movie::CHILDRENS ) {
-        $result += 1.5;
-        $result += ( $rental->days_rented - 3 ) * 1.5 if $rental->days_rented > 3;
-    }
-
-    return $result;
+    return $rental->charge();
 }
 
 1;
