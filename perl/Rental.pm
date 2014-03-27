@@ -18,21 +18,7 @@ sub charge
 {
     my $self = shift;
 
-    my $result = 0;
-    # determine amounts for each line
-    if ( $self->movie->price_code == Movie::REGULAR ) {
-        $result += 2;
-        $result += ( $self->days_rented - 2 ) * 1.5 if $self->days_rented > 2;
-    }
-    elsif ( $self->movie->price_code == Movie::NEW_RELEASE ) {
-        $result += $self->days_rented * 3;
-    }
-    elsif ( $self->movie->price_code == Movie::CHILDRENS ) {
-        $result += 1.5;
-        $result += ( $self->days_rented - 3 ) * 1.5 if $self->days_rented > 3;
-    }
-
-    return $result;
+    return $self->movie->charge( $self->days_rented );
 }
 
 sub frequent_renter_points
