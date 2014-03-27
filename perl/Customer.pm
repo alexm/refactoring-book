@@ -39,6 +39,21 @@ sub statement
     return $result;
 }
 
+sub html_statement
+{
+    my $self = shift;
+
+    my $result = "<h1>Rentals for <em>" . $self->name . "</em></h1><p>\n";
+    for my $element (@{ $self->rentals }) {
+        # show figures for this rental
+        $result .= "\t" . $element->movie->title . ": " . $element->charge() . "<br>\n";
+    }
+    # add footer lines
+    $result .= "<p>You owe <em>" . $self->total_charge() . "</em><p>\n";
+    $result .= "On this rental you earned <em>" . $self->total_frequent_renter_points() . "</em> frequent renter points<p>";
+    return $result;
+}
+
 sub total_charge
 {
     my $self = shift;
