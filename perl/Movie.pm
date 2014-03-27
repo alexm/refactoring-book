@@ -52,12 +52,20 @@ sub frequent_renter_points
     my $self = shift;
     my ($days_rented) = @_;
 
-    return ( $self->price_code == NEW_RELEASE && $days_rented > 1 ) ? 2 : 1;
+    return $self->price->frequent_renter_points($days_rented);
+}
+
+package DefaultPrice;
+
+sub frequent_renter_points
+{
+    return 1;
 }
 
 package RegularPrice;
 
 use Moo;
+extends 'DefaultPrice';
 
 sub charge
 {
@@ -82,9 +90,18 @@ sub charge
     return $days_rented * 3;
 }
 
+sub frequent_renter_points
+{
+    my $self = shift;
+    my ($days_rented) = @_;
+
+    return $days_rented > 1 ? 2 : 1;
+}
+
 package ChildrensPrice;
 
 use Moo;
+extends 'DefaultPrice';
 
 sub charge
 {
