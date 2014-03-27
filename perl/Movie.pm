@@ -1,7 +1,7 @@
-package Movie;
-
 use strict;
 use warnings;
+
+package Movie;
 
 use Moo;
 
@@ -15,14 +15,28 @@ has title => (
 
 has price_code => (
     is      => 'rw',
-    builder => 1,
+    trigger => 1,
 );
 
-sub _build_price_code {
+has price => (
+    is   => 'rwp',
+    lazy => 1,
+);
+
+sub _trigger_price_code
+{
     my $self = shift;
     my ($value) = @_;
 
-    return $value;
+    if ( $value == REGULAR ) {
+        $self->_set_price( RegularPrice->new() );
+    }
+    elsif ( $value == NEW_RELEASE ) {
+        $self->_set_price( NewReleasePrice->new() );
+    }
+    elsif ( $value == CHILDRENS ) {
+        $self->_set_price( ChildrensPrice->new() );
+    }
 }
 
 sub charge
@@ -30,21 +44,7 @@ sub charge
     my $self = shift;
     my ($days_rented) = @_;
 
-    my $result = 0;
-    # determine amounts for each line
-    if ( $self->price_code == REGULAR ) {
-        $result += 2;
-        $result += ( $days_rented - 2 ) * 1.5 if $days_rented > 2;
-    }
-    elsif ( $self->price_code == NEW_RELEASE ) {
-        $result += $days_rented * 3;
-    }
-    elsif ( $self->price_code == CHILDRENS ) {
-        $result += 1.5;
-        $result += ( $days_rented - 3 ) * 1.5 if $days_rented > 3;
-    }
-
-    return $result;
+    return $self->price->charge($days_rented);
 }
 
 sub frequent_renter_points
@@ -57,8 +57,44 @@ sub frequent_renter_points
 
 package RegularPrice;
 
+use Moo;
+
+sub charge
+{
+    my $self = shift;
+    my ($days_rented) = @_;
+
+    my $result = 2;
+    $result += ( $days_rented - 2 ) * 1.5 if $days_rented > 2;
+
+    return $result;
+}
+
 package NewReleasePrice;
 
+use Moo;
+
+sub charge
+{
+    my $self = shift;
+    my ($days_rented) = @_;
+
+    return $days_rented * 3;
+}
+
 package ChildrensPrice;
+
+use Moo;
+
+sub charge
+{
+    my $self = shift;
+    my ($days_rented) = @_;
+
+    my $result = 1.5;
+    $result += ( $days_rented - 3 ) * 1.5 if $days_rented > 3;
+
+    return $result;
+}
 
 1;
