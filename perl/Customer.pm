@@ -30,7 +30,6 @@ sub statement
     my ( $total_amount, $frequent_renter_points ) = ( 0, 0 );
     my $result = "Rental Record for " . $self->name . "\n";
     for my $element (@{ $self->rentals }) {
-        my $this_amount = $element->charge();
         # add frequent renter points
         $frequent_renter_points += 1;
         # add bonus for a two day new release rental
@@ -38,8 +37,8 @@ sub statement
             $frequent_renter_points += 1;
         }
         # show figures for this rental
-        $result .= "\t" . $element->movie->title . "\t" . $this_amount . "\n";
-        $total_amount += $this_amount;
+        $result .= "\t" . $element->movie->title . "\t" . $element->charge() . "\n";
+        $total_amount += $element->charge();
     }
     # add footer lines
     $result .= "Amount owed is $total_amount\n";
