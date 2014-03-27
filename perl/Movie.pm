@@ -39,4 +39,12 @@ sub charge
     return $result;
 }
 
+sub frequent_renter_points
+{
+    my $self = shift;
+    my ($days_rented) = @_;
+
+    return ( $self->price_code == NEW_RELEASE && $days_rented > 1 ) ? 2 : 1;
+}
+
 1;

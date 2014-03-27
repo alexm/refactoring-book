@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Moo;
-use Movie;
 
 has movie => (
     is => 'ro',
@@ -25,7 +24,7 @@ sub frequent_renter_points
 {
     my $self = shift;
 
-    return ( $self->movie->price_code == Movie::NEW_RELEASE && $self->days_rented > 1 ) ? 2 : 1;
+    return $self->movie->frequent_renter_points( $self->days_rented );
 }
 
 1;
