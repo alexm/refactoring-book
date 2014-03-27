@@ -31,16 +31,25 @@ On this rental you earned <em>4</em> frequent renter points<p>
 EoS
 );
 
-my $movie    = Movie->new( title => "The Watchmen", price_code => Movie::NEW_RELEASE );
+my ($movie, $movie2, $movie3);
+if ( Movie->can('price_code') ) {
+    $movie  = Movie->new( title => "The Watchmen",  price_code => Movie::NEW_RELEASE );
+    $movie2 = Movie->new( title => "The Quiet Man", price_code => Movie::REGULAR );
+    $movie3 = Movie->new( title => "Ice Age",       price_code => Movie::CHILDRENS );
+}
+else {
+    $movie  = Movie->new( title => "The Watchmen",  price => NewReleasePrice->new );
+    $movie2 = Movie->new( title => "The Quiet Man", price => RegularPrice->new );
+    $movie3 = Movie->new( title => "Ice Age",       price => ChildrensPrice->new );
+}
+
 my $rental   = Rental->new( movie => $movie, days_rented => 42 );
 my $customer = Customer->new( name => 'alexm' );
 $customer->add_rental($rental);
 
-my $movie2  = Movie->new( title => "The Quiet Man", price_code => Movie::REGULAR );
 my $rental2 = Rental->new( movie => $movie2, days_rented => 7 );
 $customer->add_rental($rental2);
 
-my $movie3  = Movie->new( title => "Ice Age", price_code => Movie::CHILDRENS );
 my $rental3 = Rental->new( movie => $movie3, days_rented => 2 );
 $customer->add_rental($rental3);
 
