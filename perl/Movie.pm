@@ -14,8 +14,16 @@ has title => (
 );
 
 has price_code => (
-    is => 'rw',
+    is      => 'rw',
+    builder => 1,
 );
+
+sub _build_price_code {
+    my $self = shift;
+    my ($value) = @_;
+
+    return $value;
+}
 
 sub charge
 {
@@ -46,5 +54,11 @@ sub frequent_renter_points
 
     return ( $self->price_code == NEW_RELEASE && $days_rented > 1 ) ? 2 : 1;
 }
+
+package RegularPrice;
+
+package NewReleasePrice;
+
+package ChildrensPrice;
 
 1;
