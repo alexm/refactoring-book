@@ -5,6 +5,7 @@ package Movie;
 
 use Moo;
 
+# needed only for the test
 use constant REGULAR     => 0;
 use constant NEW_RELEASE => 1;
 use constant CHILDRENS   => 2;
@@ -13,31 +14,9 @@ has title => (
     is => 'ro',
 );
 
-has price_code => (
-    is      => 'rw',
-    trigger => 1,
-);
-
 has price => (
-    is   => 'rwp',
-    lazy => 1,
+    is => 'rw',
 );
-
-sub _trigger_price_code
-{
-    my $self = shift;
-    my ($value) = @_;
-
-    if ( $value == REGULAR ) {
-        $self->_set_price( RegularPrice->new() );
-    }
-    elsif ( $value == NEW_RELEASE ) {
-        $self->_set_price( NewReleasePrice->new() );
-    }
-    elsif ( $value == CHILDRENS ) {
-        $self->_set_price( ChildrensPrice->new() );
-    }
-}
 
 sub charge
 {
