@@ -5,6 +5,7 @@ use warnings;
 
 use Moo;
 use Movie;
+use List::Util qw< sum >;
 
 has name => (
     is => 'ro',
@@ -36,21 +37,16 @@ sub statement
         $result .= "\t" . $element->movie->title . "\t" . $element->charge() . "\n";
     }
     # add footer lines
-    $result .= "Amount owed is " . $self->_total_charge() . "\n";
+    $result .= "Amount owed is " . $self->total_charge() . "\n";
     $result .= "You earned $frequent_renter_points frequent renter points";
     return $result;
 }
 
-sub _total_charge
+sub total_charge
 {
     my $self = shift;
 
-    my $result = 0;
-    for my $element (@{ $self->rentals }) {
-        $result += $element->charge();
-    }
-
-    return $result;
+    return sum(map { $_->charge() } @{ $self->rentals });
 }
 
 1;
