@@ -27,18 +27,29 @@ sub statement
 {
     my $self = shift;
 
-    my ( $total_amount, $frequent_renter_points ) = ( 0, 0 );
+    my $frequent_renter_points = 0;
     my $result = "Rental Record for " . $self->name . "\n";
     for my $element (@{ $self->rentals }) {
         $frequent_renter_points += $element->frequent_renter_points();
 
         # show figures for this rental
         $result .= "\t" . $element->movie->title . "\t" . $element->charge() . "\n";
-        $total_amount += $element->charge();
     }
     # add footer lines
-    $result .= "Amount owed is $total_amount\n";
+    $result .= "Amount owed is " . $self->_total_charge() . "\n";
     $result .= "You earned $frequent_renter_points frequent renter points";
+    return $result;
+}
+
+sub _total_charge
+{
+    my $self = shift;
+
+    my $result = 0;
+    for my $element (@{ $self->rentals }) {
+        $result += $element->charge();
+    }
+
     return $result;
 }
 
