@@ -16,3 +16,10 @@ perl
 ```sh
 cd perl && prove -Ipage_002
 ```
+
+python
+------
+
+```sh
+cd python && python3 -m unittest
+```
