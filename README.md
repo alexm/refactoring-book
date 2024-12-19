@@ -6,9 +6,13 @@ Code from the book Refactoring, Ruby Edition
 ruby
 ----
 
-    cd ruby && rake page_002
+```sh
+cd ruby && rake page_002
+```
 
 perl
 ----
 
-    cd perl && prove -Ipage_002
+```sh
+cd perl && prove -Ipage_002
+```
