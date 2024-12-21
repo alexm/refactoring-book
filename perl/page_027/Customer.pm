@@ -21,7 +21,7 @@ sub add_rental
     my $self  = shift;
     my ($arg) = @_;
 
-    push $self->rentals, $arg;
+    push @{ $self->rentals }, $arg;
 }
 
 sub statement
