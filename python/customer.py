@@ -18,7 +18,6 @@ class Customer:
         frequent_renter_points = 0
         result = f"Rental Record for {self.name}\n"
         for element in self._rentals:
-            this_amount = element.charge
 
             # add frequent renter points
             frequent_renter_points += 1
@@ -27,8 +26,8 @@ class Customer:
                 frequent_renter_points += 1
 
             # show figures for this rental
-            result += "\t" + element.movie.title + "\t" + str(this_amount) + "\n"
-            total_amount += this_amount
+            result += "\t" + element.movie.title + "\t" + str(element.charge) + "\n"
+            total_amount += element.charge
 
         # add footer lines
         result += f"Amount owed is {total_amount}\n"
