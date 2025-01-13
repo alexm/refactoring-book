@@ -18,7 +18,7 @@ class Customer:
         frequent_renter_points = 0
         result = f"Rental Record for {self.name}\n"
         for element in self._rentals:
-            this_amount = self.amount_for(element)
+            this_amount = element.charge
 
             # add frequent renter points
             frequent_renter_points += 1
@@ -34,6 +34,3 @@ class Customer:
         result += f"Amount owed is {total_amount}\n"
         result += f"You earned {frequent_renter_points} frequent renter points"
         return result
-
-    def amount_for(self, rental):
-        return rental.charge
