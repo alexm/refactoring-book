@@ -3,17 +3,21 @@ from movie import Movie
 
 class Customer:
     def __init__(self, name):
-        self.name = name
-        self.rentals = []
+        self._name = name
+        self._rentals = []
+
+    @property
+    def name(self):
+        return self._name
 
     def add_rental(self, arg):
-        self.rentals.append(arg)
+        self._rentals.append(arg)
 
     def statement(self):
         total_amount = 0
         frequent_renter_points = 0
         result = f"Rental Record for {self.name}\n"
-        for element in self.rentals:
+        for element in self._rentals:
             this_amount = 0
 
             # determine amounts for each line

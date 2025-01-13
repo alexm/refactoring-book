@@ -4,5 +4,9 @@ class Movie:
     CHILDRENS = 2
 
     def __init__(self, title, price_code):
-        self.title = title
+        self._title = title
         self.price_code = price_code
+
+    @property
+    def title(self):
+        return self._title
