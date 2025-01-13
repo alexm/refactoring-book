@@ -36,14 +36,4 @@ class Customer:
         return result
 
     def amount_for(self, rental):
-        this_amount = 0
-        match rental.movie.price_code:
-            case Movie.REGULAR:
-                this_amount += 2
-                if rental.days_rented > 2: this_amount += (rental.days_rented - 2) * 1.5
-            case Movie.NEW_RELEASE:
-                this_amount += rental.days_rented * 3
-            case Movie.CHILDRENS:
-                this_amount += 1.5
-                if rental.days_rented > 3: this_amount += (rental.days_rented - 3) * 1.5
-        return this_amount
+        return rental.amount_for
