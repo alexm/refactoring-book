@@ -36,4 +36,4 @@ class Customer:
         return result
 
     def amount_for(self, rental):
-        return rental.amount_for
+        return rental.charge

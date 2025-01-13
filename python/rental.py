@@ -15,7 +15,7 @@ class Rental:
         return self._days_rented
 
     @property
-    def amount_for(self):
+    def charge(self):
         this_amount = 0
         match self.movie.price_code:
             case Movie.REGULAR:
