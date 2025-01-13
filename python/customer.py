@@ -18,18 +18,7 @@ class Customer:
         frequent_renter_points = 0
         result = f"Rental Record for {self.name}\n"
         for element in self._rentals:
-            this_amount = 0
-
-            # determine amounts for each line
-            match element.movie.price_code:
-                case Movie.REGULAR:
-                    this_amount += 2
-                    if element.days_rented > 2: this_amount += (element.days_rented - 2) * 1.5
-                case Movie.NEW_RELEASE:
-                    this_amount += element.days_rented * 3
-                case Movie.CHILDRENS:
-                    this_amount += 1.5
-                    if element.days_rented > 3: this_amount += (element.days_rented - 3) * 1.5
+            this_amount = self.amount_for(element)
 
             # add frequent renter points
             frequent_renter_points += 1
@@ -45,3 +34,16 @@ class Customer:
         result += f"Amount owed is {total_amount}\n"
         result += f"You earned {frequent_renter_points} frequent renter points"
         return result
+
+    def amount_for(self, element):
+        this_amount = 0
+        match element.movie.price_code:
+            case Movie.REGULAR:
+                this_amount += 2
+                if element.days_rented > 2: this_amount += (element.days_rented - 2) * 1.5
+            case Movie.NEW_RELEASE:
+                this_amount += element.days_rented * 3
+            case Movie.CHILDRENS:
+                this_amount += 1.5
+                if element.days_rented > 3: this_amount += (element.days_rented - 3) * 1.5
+        return this_amount
