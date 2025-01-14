@@ -18,17 +18,19 @@ class Customer:
         frequent_renter_points = 0
         result = f"Rental Record for {self.name}\n"
         for element in self._rentals:
-            frequent_renter_points += element.frequent_renter_points
-
             # show figures for this rental
             result += "\t" + element.movie.title + "\t" + str(element.charge) + "\n"
 
         # add footer lines
         result += f"Amount owed is {self._total_charge}\n"
-        result += f"You earned {frequent_renter_points} frequent renter points"
+        result += f"You earned {self._total_frequent_renter_points} frequent renter points"
         return result
 
     @property
     def _total_charge(self):
         result = sum(rental.charge for rental in self._rentals)
         return result
+
+    @property
+    def _total_frequent_renter_points(self):
+        return sum(rental.frequent_renter_points for rental in self._rentals)
