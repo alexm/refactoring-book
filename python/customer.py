@@ -22,9 +22,15 @@ class Customer:
 
             # show figures for this rental
             result += "\t" + element.movie.title + "\t" + str(element.charge) + "\n"
-            total_amount += element.charge
 
         # add footer lines
-        result += f"Amount owed is {total_amount}\n"
+        result += f"Amount owed is {self._total_charge}\n"
         result += f"You earned {frequent_renter_points} frequent renter points"
+        return result
+
+    @property
+    def _total_charge(self):
+        result = 0
+        for element in self._rentals:
+            result += element.charge
         return result
