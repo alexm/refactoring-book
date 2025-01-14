@@ -27,3 +27,7 @@ class Rental:
                 result += 1.5
                 if self.days_rented > 3: result += (self.days_rented - 3) * 1.5
         return result
+
+    @property
+    def frequent_renter_points(self):
+        return 2 if self.movie.price_code == Movie.NEW_RELEASE and self.days_rented > 1 else 1
