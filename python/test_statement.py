@@ -27,3 +27,12 @@ class StatementTests(TestCase):
 Amount owed is 137.0
 You earned 4 frequent renter points"""
         self.assertEqual(statement_exp, self.customer.statement())
+
+    def test_html_statement(self):
+        html_statement_exp = """<h1>Rental Record for <em>alexm</em></h1><p>
+\tThe Watchmen: 126<br>
+\tThe Quiet Man: 9.5<br>
+\tIce Age: 1.5<br>
+<p>You owe <em>137.0</em></p>
+On this rental you earned <em>4</em> frequent renter points</p>"""
+        self.assertEqual(html_statement_exp, self.customer.html_statement())

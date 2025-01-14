@@ -34,3 +34,14 @@ class Customer:
     @property
     def _total_frequent_renter_points(self):
         return sum(rental.frequent_renter_points for rental in self._rentals)
+
+    def html_statement(self):
+        result = f"<h1>Rental Record for <em>{self.name}</em></h1><p>\n"
+        for element in self._rentals:
+            # show figures for this rental
+            result += "\t" + f"{element.movie.title}: {element.charge}<br>\n"
+
+        # add footer lines
+        result += f"<p>You owe <em>{self._total_charge}</em></p>\n"
+        result += f"On this rental you earned <em>{self._total_frequent_renter_points}</em> frequent renter points</p>"
+        return result
