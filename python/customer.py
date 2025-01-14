@@ -30,7 +30,5 @@ class Customer:
 
     @property
     def _total_charge(self):
-        result = 0
-        for element in self._rentals:
-            result += element.charge
+        result = sum(rental.charge for rental in self._rentals)
         return result
