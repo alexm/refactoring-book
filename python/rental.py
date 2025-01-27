@@ -20,4 +20,4 @@ class Rental:
 
     @property
     def frequent_renter_points(self):
-        return 2 if self.movie.price_code == Movie.NEW_RELEASE and self.days_rented > 1 else 1
+        return self.movie.frequent_renter_points(self.days_rented)
