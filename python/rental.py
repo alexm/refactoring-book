@@ -16,17 +16,7 @@ class Rental:
 
     @property
     def charge(self):
-        result = 0
-        match self.movie.price_code:
-            case Movie.REGULAR:
-                result += 2
-                if self.days_rented > 2: result += (self.days_rented - 2) * 1.5
-            case Movie.NEW_RELEASE:
-                result += self.days_rented * 3
-            case Movie.CHILDRENS:
-                result += 1.5
-                if self.days_rented > 3: result += (self.days_rented - 3) * 1.5
-        return result
+        return self.movie.charge(self.days_rented)
 
     @property
     def frequent_renter_points(self):
