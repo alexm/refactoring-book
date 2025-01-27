@@ -11,6 +11,14 @@ class Movie:
     def title(self):
         return self._title
 
+    @property
+    def price_code(self):
+        return self._price_code
+
+    @price_code.setter
+    def price_code(self, value):
+        self._price_code = value
+
     def charge(self, days_rented):
         result = 0
         match self.price_code:
