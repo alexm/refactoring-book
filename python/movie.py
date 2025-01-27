@@ -1,36 +1,17 @@
 class Movie:
-    REGULAR = 0
-    NEW_RELEASE = 1
-    CHILDRENS = 2
-
-    def __init__(self, title, price_code):
+    def __init__(self, title, price):
         self._title = title
-        self.price_code = price_code
+        self.price = price
 
     @property
     def title(self):
         return self._title
 
-    @property
-    def price_code(self):
-        return self._price_code
-
-    @price_code.setter
-    def price_code(self, value):
-        self._price_code = value
-        match value:
-            case Movie.REGULAR:
-                self._price = RegularPrice()
-            case Movie.NEW_RELEASE:
-                self._price = NewReleasePrice()
-            case Movie.CHILDRENS:
-                self._price = ChildrensPrice()
-
     def charge(self, days_rented):
-        return self._price.charge(days_rented)
+        return self.price.charge(days_rented)
 
     def frequent_renter_points(self, days_rented):
-        return self._price.frequent_renter_points(days_rented)
+        return self.price.frequent_renter_points(days_rented)
 
 
 class DefaultPrice:

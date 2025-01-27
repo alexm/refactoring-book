@@ -1,15 +1,15 @@
 from unittest import TestCase
 
-from movie import Movie
+from movie import Movie, RegularPrice, NewReleasePrice, ChildrensPrice
 from rental import Rental
 from customer import Customer
 
 class StatementTests(TestCase):
 
     def setUp(self):
-        movie = Movie("The Watchmen", Movie.NEW_RELEASE)
-        movie2 = Movie("The Quiet Man", Movie.REGULAR)
-        movie3 = Movie("Ice Age", Movie.CHILDRENS)
+        movie = Movie("The Watchmen", NewReleasePrice())
+        movie2 = Movie("The Quiet Man", RegularPrice())
+        movie3 = Movie("Ice Age", ChildrensPrice())
 
         rental = Rental(movie, 42)
         self.customer = Customer('alexm')
