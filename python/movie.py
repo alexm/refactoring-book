@@ -30,10 +30,15 @@ class Movie:
         return self._price.charge(days_rented)
 
     def frequent_renter_points(self, days_rented):
-        return 2 if self.price_code == Movie.NEW_RELEASE and days_rented > 1 else 1
+        return self._price.frequent_renter_points(days_rented)
 
 
-class RegularPrice:
+class DefaultPrice:
+    @staticmethod
+    def frequent_renter_points(days_rented):
+        return 1
+
+class RegularPrice(DefaultPrice):
     @staticmethod
     def charge(days_rented):
         result = 2
@@ -46,7 +51,11 @@ class NewReleasePrice:
     def charge(days_rented):
         return days_rented * 3
 
-class ChildrensPrice:
+    @staticmethod
+    def frequent_renter_points(days_rented):
+        return 2 if days_rented > 1 else 1
+
+class ChildrensPrice(DefaultPrice):
     @staticmethod
     def charge(days_rented):
         result = 1.5
